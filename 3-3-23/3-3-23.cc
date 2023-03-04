@@ -11,28 +11,20 @@ private:
     int total_score;
 
 public:
-    int scorE[5];
-    int total_scorE;
-    void readInputs(void);
-    int setReadInputs();
-    int calculateTotalScore(int score[5]);
+    void readInputs();
+    int calculateTotalScore();
+    int kristenGrade(int K_grades, int others_grade);
 };
 void Student::readInputs()
 {
     std::cout << "Enter Scores : ";
     for (int i = 0; i < 5; i++)
     {
-        cin >> scorE[i];
+        cin >> score[i];
     }
 }
-int Student::setReadInputs()
-{
-    for (int i = 0; i < 5; i++)
-    {
-        score[i] = scorE[i];
-    }
-}
-int Student::calculateTotalScore(int score[5])
+
+int Student::calculateTotalScore()
 {
     int tmp = 0;
     for (int i = 0; i < 5; i++)
@@ -41,20 +33,40 @@ int Student::calculateTotalScore(int score[5])
     }
     return tmp;
 }
+int Student::kristenGrade(int K_grades, int others_grades)
+{
+    if (K_grades < others_grades)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
 
 int main()
 {
-    int number_of_students;
+    int number_of_students, count = 0;
     std::cout << "Enter Number Of Students : ";
     cin >> number_of_students;
 
     Student stud[number_of_students];
-    int scorE[5];
     for (int i = 0; i < number_of_students; i++)
     {
         stud[i].readInputs();
-        int scorE[5]=stud[i].setReadInputs()
     }
+    for (int i = 0; i < number_of_students; i++)
+    {
+
+        stud[i].calculateTotalScore();
+    }
+    for (int i = 0; i < number_of_students; i++)
+    {
+        count = count + stud[i].kristenGrade(stud[0].calculateTotalScore(), stud[i].calculateTotalScore());
+    }
+
+    cout << "result : " << count << "\n";
 
     return 0;
 }
