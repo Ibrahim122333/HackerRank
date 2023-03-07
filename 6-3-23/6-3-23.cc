@@ -1,96 +1,57 @@
 #include <bits/stdc++.h>
+#include <iostream>
+#include <ostream>
+#include <random>
+#include <system_error>
+#include <valarray>
 using namespace std;
-// Implement the class Box
-class Box {
-private:
-  // l,b,h are integers representing the dimensions of the box
-  int length, breadth, height;
 
+class Box {
 public:
-  // Constructors:
-  // Box();
-  Box() {
-    length = 0;
-    breadth = 0;
-    height = 0;
+  int l, b, h;
+  Box() { l = b = h = 0; }
+  Box(int length, int breadth, int height) {
+    l = length;
+    b = breadth;
+    h = height;
   }
-  // Box(int,int,int);
-  Box(int l, int b, int h) {
-    length = l;
-    breadth = b;
-    height = h;
+  Box(Box &b1) {
+    l = b1.l;
+    b = b1.b;
+    h = b1.h;
   }
-  // Box(Box);
-  Box(const Box &B) {
-    length = B.length;
-    breadth = B.breadth;
-    height = B.height;
-  }
-  // int getLength(); // Return box's length
-  int getLength() { return length; }
-  // int getBreadth (); // Return box's breadth
-  int getBreadth() { return breadth; }
-  // int getHeight ();  //Return box's height
-  int getHeight() { return height; }
-  // long long CalculateVolume(); // Return the volume of the box
-  long long CalculateVolume() { return (long long)(breadth)*length * height; }
-  // Overload operator < as specified
-  // bool operator<(Box& b)
-  bool operator<(Box &B) {
-    if (length < B.length) {
+  int getLength() { return l; }
+  int getBreadth() { return b; }
+  int getHeight() { return h; }
+  long long CalculateVolume() { return (long long)l * b * h; }
+  bool operator<(Box &b1) {
+    if ((l < b1.l) || ((b < b1.b) && (l == b1.l)) ||
+        ((h < b1.h) && (b == b1.b) && (l == b1.l))) {
       return true;
-    } else if (length == B.length) {
-      if (breadth < B.breadth) {
-        return true;
-      } else if (breadth == B.breadth) {
-        if (height < B.height) {
-          return true;
-        }
-      }
-    }
-    return false;
-  }
-};
-// Overload operator << as specified
-// ostream& operator<<(ostream& out, Box& B)
-ostream &operator<<(ostream &out, Box &B) {
-  out << B.getLength() << " " << B.getBreadth() << " " << B.getHeight();
-  return out;
-};
-void check2() {
-  int n;
-  cin >> n;
-  Box temp;
-  for (int i = 0; i < n; i++) {
-    int type;
-    cin >> type;
-    if (type == 1) {
-      cout << temp << endl;
-    }
-    if (type == 2) {
-      int l, b, h;
-      cin >> l >> b >> h;
-      Box NewBox(l, b, h);
-      temp = NewBox;
-      cout << temp << endl;
-    }
-    if (type == 3) {
-      int l, b, h;
-      cin >> l >> b >> h;
-      Box NewBox(l, b, h);
-      if (NewBox < temp) {
-        cout << "Lesser\n";
-      } else {
-        cout << "Greater\n";
-      }
-    }
-    if (type == 4) {
-      cout << temp.CalculateVolume() << endl;
-    }
-    if (type == 5) {
-      Box NewBox(temp);
-      cout << NewBox << endl;
+    } else {
+      return false;
     }
   }
+};
+
+ostream &operator<<(ostream &out, Box B) {
+  int l = B.getLength();
+  int b = B.getBreadth();
+  int h = B.getHeight();
+  return out << l << ' ' << b << ' ' << h << endl;
 }
-int main() { check2(); }
+
+int main() {
+  int l, b, h;
+  cin >> l >> b >> h;
+  if (l == 0 && b == 0 && h == 0) {
+    Box bO1;
+    cout << bO1;
+  } else {
+    Box bO1(l, b, h);
+    cout << bO1;
+  }
+  // operator<<(std::cout, bO1);
+
+  return 0;
+}
