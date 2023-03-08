@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+#include <cassert>
 #include <iostream>
 #include <ostream>
 #include <random>
@@ -41,17 +42,36 @@ ostream &operator<<(ostream &out, Box B) {
   return out << l << ' ' << b << ' ' << h << endl;
 }
 
+bool operator<(const Box &B1, const Box &B2) {
+  if ((B1.l < B2.l) || ((B1.b < B2.b) && (B1.l == B2.l)) ||
+      ((B1.h < B2.h) && (B1.b == B2.b) && (B1.l == B2.l))) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 int main() {
   int l, b, h;
   cin >> l >> b >> h;
-  if (l == 0 && b == 0 && h == 0) {
-    Box bO1;
-    cout << bO1;
-  } else {
-    Box bO1(l, b, h);
-    cout << bO1;
-  }
+  Box bO1;
+  Box bO2(l, b, h);
+  std::cout << "length  of box2                     >> " << bO2.getLength()
+            << std::endl;
+  std::cout << "breadth of box2                     >> " << bO2.getBreadth()
+            << std::endl;
+  std::cout << "height  of box2                     >> " << bO2.getHeight()
+            << std::endl;
+  std::cout << "volume  of box2                     >> "
+            << bO2.CalculateVolume() << std::endl;
+  bool a = bO1 < bO2;
+  std::cout << "Box1 is greater than Box2 or not    >> " << a << std::endl;
+  std::cout << "Is box1 is greater than box2 or not >> " << std::boolalpha << a
+            << std::endl;
+  std::cout << "Box2 is                             >> " << bO2 << std::endl;
   // operator<<(std::cout, bO1);
 
   return 0;
 }
+// video tutorial for class overloading operator
+// https://www.youtube.com/watch?v=BnMnozsSPmw
